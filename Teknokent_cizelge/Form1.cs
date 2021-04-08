@@ -172,7 +172,7 @@ namespace Teknokent_cizelge
                 MessageBox.Show("Lütfen Ay ve Yıl Seçiniz");
             }
             else
-            {
+            { 
                 //İşlemler
                 listBox1.Items.Clear();
 
