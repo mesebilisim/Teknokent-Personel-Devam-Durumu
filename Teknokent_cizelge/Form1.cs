@@ -20,6 +20,7 @@ using Microsoft.Office.Interop.Excel;
 
 using Microsoft.Data.Sqlite;
 
+
 namespace Teknokent_cizelge
 {
     public partial class Form1 : Form
@@ -58,10 +59,10 @@ namespace Teknokent_cizelge
             gonder.Dispose();
             //MessageBox.Show("Aktarım Tamamlandı");
         }
-        public void Sil(int tc)
+        public void Sil(int id)
         {
             baglanti.Open();
-            string sil = "delete from olustur where id='" + tc + "'";
+            string sil = "delete from olustur where id='" + id + "'";
             SqliteCommand temizle = new SqliteCommand(sil, baglanti);
             temizle.ExecuteNonQuery();
             baglanti.Close();
@@ -191,6 +192,7 @@ namespace Teknokent_cizelge
 
                 int a = comboBox1.SelectedIndex;
                 int b = Convert.ToInt32(comboBox2.SelectedItem);
+                
                 //DateTime Ay = DateTime.Now.AddMonths(a);  //Ay Ekleme
                 //DateTime Yil = DateTime.Now.AddYears(b);  //Yıl Ekleme
                 string ay = Convert.ToString(comboBox1.SelectedIndex);
@@ -204,16 +206,16 @@ namespace Teknokent_cizelge
                     DateTime dt = new DateTime(b, a, i);
                     int kacinciGun = (int)dt.DayOfWeek;
 
-                    if (kacinciGun == 6 || kacinciGun == 0)
+                    if (kacinciGun == 6 || kacinciGun == 0)   // haftasonu
                     {
                         if (kacinciGun == 0)
                         {
-                            listBox1.Items.Add(i + " / " + comboBox1.SelectedItem + " / " + b + " PAZAR" + " Hafta Sonu");
+                            listBox1.Items.Add(i + " / " + comboBox1.SelectedItem + " / " + b);
                             //  Olustur(i, ay, b.ToString(), "PAZAR", "Hafta Sonu");
                         }
                         else
                         {
-                            listBox1.Items.Add(i + " / " + comboBox1.SelectedItem + " / " + b + " CUMARTESİ" + " Hafta Sonu");
+                            listBox1.Items.Add(i + " / " + comboBox1.SelectedItem + " / " + b);
                             //Olustur(i, ay, b.ToString(), "CUMARTESİ", "Hafta Sonu");
                         }
 
@@ -224,29 +226,29 @@ namespace Teknokent_cizelge
                         switch (kacinciGun)
                         {
                             case 1:
-                                listBox1.Items.Add(tc_girisbox.Text + i+ " / " + comboBox1.SelectedIndex + " / " + b + " PAZARTESİ" + " Hafta İçi");
+                                //listBox1.Items.Add(tc_girisbox.Text + i+ " / " + comboBox1.SelectedItem + " / " + b);
                                 Olustur(i, ay, b.ToString());
                                 break;
                             case 2:
-                                listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b + " SALI" + " Hafta İçi");
+                                //listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b);
                                 Olustur(i, ay, b.ToString());
                                 break;
                             case 3:
-                                listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b + " ÇARŞAMBA" + " Hafta İçi");
+                                //listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b);
                                 Olustur(i, ay, b.ToString());
                                 break;
                             case 4:
-                                listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b + " PERŞEMBE" + " Hafta İçi");
+                                //listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b);
                                 Olustur(i, ay, b.ToString());
                                 break;
                             case 5:
-                                listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b + " CUMA" + " Hafta İçi");
-                                Olustur(i, ay, b.ToString());
+                                //listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b);
+                                Olustur(i, ay, b.ToString()+ Environment.NewLine);
                                 break;
                         }
-
                     }
                 }
+
                 listele();
 
                 Excel.Application app = new Excel.Application();
@@ -254,6 +256,7 @@ namespace Teknokent_cizelge
                 Workbook kitap = app.Workbooks.Add(System.Reflection.Missing.Value);
                 object misValue = System.Reflection.Missing.Value;
                 Worksheet sayfa = (Worksheet)kitap.Sheets[1];
+
                 for (int i = 0; i < dataGridView1.Columns.Count; i++)
                 {
                     Range alan = (Range)sayfa.Cells[1, 1];
@@ -267,7 +270,7 @@ namespace Teknokent_cizelge
                         alan2.Cells[2, 1] = dataGridView1[i, j].Value;
                     }
                 }
-               
+                
                 kitap.SaveAs("C:\\cizelgeler\\" + tc_girisbox.Text + ".xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 kitap.Close(true, misValue, misValue);
                 app.Quit();
