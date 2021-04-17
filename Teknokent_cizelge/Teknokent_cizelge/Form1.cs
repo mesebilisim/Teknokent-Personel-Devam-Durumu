@@ -242,7 +242,7 @@ namespace Teknokent_cizelge
                                 break;
                             case 5:
                                 //listBox1.Items.Add(tc_girisbox.Text + i + " / " + comboBox1.SelectedItem + " / " + b);
-                                Olustur(i, ay, b.ToString()+ Environment.NewLine);
+                                Olustur(i, ay, b.ToString());
                                 break;
                         }
                     }
