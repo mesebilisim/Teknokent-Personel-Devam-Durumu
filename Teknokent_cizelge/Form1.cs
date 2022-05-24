@@ -271,8 +271,7 @@ namespace Teknokent_cizelge
                     }
                 }
                 
-                // String f = (@"\" + tc_girisbox.Text + ".xls");
-                string fileName = String.Format((@"{0}\" + tc_girisbox.Text + "_" + (a) + ".xls"), System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
+                string fileName = String.Format((@"{0}\" + tc_girisbox.Text + "_" + (a) + "_" + b + ".xls"), System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
 
                 kitap.SaveAs(fileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 kitap.Close(true, misValue, misValue);
@@ -280,8 +279,6 @@ namespace Teknokent_cizelge
 
                 MessageBox.Show("Çizelge kaydedildi");
             }
-            
-
            
 
           
