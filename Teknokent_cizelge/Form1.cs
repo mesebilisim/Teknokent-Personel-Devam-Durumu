@@ -24,7 +24,7 @@ namespace Teknokent_cizelge
 {
     public partial class Form1 : Form
     {
-        SqliteConnection baglanti = new SqliteConnection(@"Data Source= C:\Users\furka\OneDrive\Masaüstü\software_eng\VisualStudioProjects\Teknokent_cizelge\Teknokent_cizelge\Datetime.db");
+        SqliteConnection baglanti = new SqliteConnection(@"Data Source=Datetime.db");
 
         public void listele()
         {
@@ -135,6 +135,7 @@ namespace Teknokent_cizelge
             SqliteCommand komut = new SqliteCommand(sql, baglanti);
             SqliteDataReader read = komut.ExecuteReader();
 
+            comboBox1.Items.Add("Aylar");
             while (read.Read())
             {
                 comboBox1.Items.Add(read["aylar_ad"]);
@@ -270,7 +271,10 @@ namespace Teknokent_cizelge
                     }
                 }
                 
-                kitap.SaveAs("C:\\cizelgeler\\" + tc_girisbox.Text + ".xls", Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                // String f = (@"\" + tc_girisbox.Text + ".xls");
+                string fileName = String.Format((@"{0}\" + tc_girisbox.Text + "_" + (a) + ".xls"), System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase));
+
+                kitap.SaveAs(fileName, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                 kitap.Close(true, misValue, misValue);
                 app.Quit();
 
